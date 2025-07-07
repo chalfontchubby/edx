@@ -29,12 +29,13 @@ states= {"stop": ["red"],
 
 sequence = ["stop", "prepare", "go", "slow"]
 
-for state in sequence :
-    light_states= states[state]
-    print(f"{state=}")
-    for (name,led) in lights.items():
-        if name in light_states:
-            led.on()
-        else:
-            led.off()
-
+while True:
+    for state in sequence :
+        light_states= states[state]
+        print(f"{state=}")
+        for (name,led) in lights.items():
+            if name in light_states:
+                led.on()
+            else:
+                led.off()
+        sleep(1)
