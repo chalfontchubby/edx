@@ -51,8 +51,8 @@ codes = {
 }
 
 class OutputDevice:
-    def __init__(self):
-        self.led =  LED(27)
+    def __init__(self, pin):
+        self.led =  LED(pin)
         return
 
     def dot(self):
@@ -100,6 +100,6 @@ class OutputDevice:
             self.play_letter(letter)
 
 
-led = OutputDevice()
+led = OutputDevice(10)
 
 led.play_word("Hello World")
