@@ -1,6 +1,6 @@
 from time import sleep
 try :
-    from gpiozero import LED, Button
+    from gpiozero import LED, Button, Buzzer
 except ImportError:
     # Dummy LED class to allow testing on non-raspberry pi
     class LED:
@@ -39,11 +39,18 @@ def set_lights(state):
 
 sequence = ["slow","stop", "prepare", "go", ]
 btn = Button(2)
+buzz = Buzzer(3)
 set_lights("go")
 while True:
     btn.wait_for_press()
+    buzz.on()
+    for i in range (5):
+        buzz.on()
+        sleep(0.2)
+        buzz.off()
+        sleep(0.2)
     for state in sequence :
         set_lights(state)
         sleep(1)
+        buzz.off()
     print(f"{btn.is_pressed=}")
-
