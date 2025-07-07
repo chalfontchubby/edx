@@ -1,4 +1,17 @@
 from time import sleep
+try :
+    from gpiozero import LED
+except ImportError:
+    # Dummy LED class to allow testing on non-raspberry pi
+    class LED:
+        def __init__(self, pin):
+            print(f"Create led on {pin=}")
+
+        def on(self):
+            print(f"LED on")
+
+        def off(self):
+            print(f"LED off")
 
 dot_time = 0.2
 dash_time = 0.7
@@ -37,35 +50,30 @@ codes = {
     " ": ""
 }
 
-class Led:
+class OutputDevice:
     def __init__(self):
+        self.led =  LED(27)
         return
-
-    def on(self):
-        print("LED ON")
-
-    def off(self):
-        print("LED OFF")
 
     def dot(self):
         print("LED DOT")
-        self.on()
+        self.led.on()
         sleep(dot_time)
-        self.off()
+        self.led.off()
         sleep(gap_time)
 
     def dash(self):
         print("LED DASH")
-        self.on()
+        self.led.on()
         sleep(dash_time)
-        self.off()
+        self.led.off()
         sleep(gap_time)
 
     def error(self):
         print("Error")
-        self.on()
+        self.led.on()
         sleep(error_time)
-        self.off()
+        self.led.off()
         sleep(gap_time)
 
 
@@ -92,6 +100,6 @@ class Led:
             self.play_letter(letter)
 
 
-led = Led()
+led = OutputDevice()
 
 led.play_word("Hello World")
